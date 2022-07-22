@@ -9,7 +9,7 @@ import { Link } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
 import {container, headerRight, headerIcon, headerLink, avatar, navRight, navContent, headerLinkWrap, header } from './layout.module.css'
 
-const Layout = ({ children }) => {
+const Layout = ({ children, pageTitle }) => {
   return (
     <div className={container}>
       {/* header */}
@@ -43,7 +43,7 @@ const Layout = ({ children }) => {
         </div>
       </div>
       
-     
+      {pageTitle}
       <div>
        
         {children}
