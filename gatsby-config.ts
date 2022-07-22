@@ -1,7 +1,14 @@
+/*
+ * @Description: 
+ * @Autor: yzq
+ * @Date: 2022-07-11 23:57:42
+ * @LastEditors: yzq
+ */
 import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
+    
     title: `ZChin website`,
     siteUrl: `https://www.yourdomain.tld`
   },
@@ -14,7 +21,17 @@ const config: GatsbyConfig = {
     options: {
       "icon": "src/images/icon.png"
     }
-  }]
+  },
+  "gatsby-plugin-image",
+  "gatsby-plugin-sharp",
+  {
+    resolve: "gatsby-source-filesystem",
+    options: {
+      name: `blog`,
+      path: `${__dirname}/blog`,
+    }
+  },
+  ]
 };
 
 export default config;
