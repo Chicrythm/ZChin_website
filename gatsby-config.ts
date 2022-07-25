@@ -17,21 +17,22 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: ["gatsby-plugin-sass", {
-    resolve: 'gatsby-plugin-manifest',
-    options: {
-      "icon": "src/images/icon.png"
-    }
-  },
-  "gatsby-plugin-image",
-  "gatsby-plugin-sharp",
-  {
-    resolve: "gatsby-source-filesystem",
-    options: {
-      name: `blog`,
-      path: `${__dirname}/blog`,
-    }
-  },
-  "gatsby-plugin-mdx",
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        "icon": "src/images/icon.png"
+      }
+    },
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: `blog`,
+        path: `${__dirname}/blog`,
+      }
+    },
+    "gatsby-plugin-mdx",
+    "gatsby-transformer-sharp",
   ]
 };
 
