@@ -14,7 +14,7 @@ import {blogBackground, blogLayout, blogContent, gatsbyImage, blogLink, blogCont
 } from "./{mdx.slug}.module.css"
 import { graphql, Link } from 'gatsby'
 
-import {rafFix} from './fixblock.js'
+import {rafFix} from '../../common/fixblock.js'
 
 const BlogPost = ({data}) => {
   const image = getImage(data.mdx.frontmatter.hero_image)
