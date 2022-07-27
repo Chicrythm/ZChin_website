@@ -9,6 +9,7 @@ import * as React from 'react'
 import { graphql, Link } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
+
 const BlogPage = ({data}) => {
   return (
     <Layout pageTitle="My Blog Posts">

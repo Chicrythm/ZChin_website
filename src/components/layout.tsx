@@ -35,7 +35,7 @@ const Layout = ({ children, pageTitle }) => {
               </div>
               <StaticImage className={avatar}
                 alt="avatar"
-                src="../images/icon/1.jpg"
+                src="../images/icon/2.jpeg"
               />
             </nav>
           

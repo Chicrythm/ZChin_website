@@ -1,9 +1,11 @@
 import * as React from "react"
 import './index.module.css'
 import Layout from '../components/layout'
+import {remset} from '../common/remset'
 
 // const { Header, Footer, Sider, Content } = Layout;
 const IndexPage = () => {
+
   return (
     <>
       <Layout pageTitle="Home Page">

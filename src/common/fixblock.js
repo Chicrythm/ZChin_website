@@ -4,6 +4,9 @@
  * @Date: 2022-07-26 11:48:55
  * @LastEditors: yzq
  */
+
+
+
 export function rafFix() {
   window.requestAnimationFrame(displayFix)
 }
@@ -16,10 +19,6 @@ export function displayFix(){
     console.log(t)
     if(t > 53) {
       blogLink.style.position = 'fixed'
-      blogLink.style.right = '144px'
-    }else {
-      blogLink.style.position = 'absolute'
-      blogLink.style.right = '0px'
     }
     window.requestAnimationFrame(displayFix)
   }

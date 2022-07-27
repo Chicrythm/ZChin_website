@@ -10,18 +10,18 @@ import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image'
 import {blogBackground, blogLayout, blogContent, gatsbyImage, blogLink, blogContentLayout, blogTime,
   avatar, dateWrap, dateContent, floatTitle, floatContent ,floatHeader,
-  floatWrap, floatRest
+  floatWrap, floatRest, blogLinkWrap
 } from "./{mdx.slug}.module.css"
 import { graphql, Link } from 'gatsby'
-
-import {rafFix} from '../../common/fixblock.js'
+import { remset } from '../../common/remset'
+// import {rafFix} from '../../common/fixblock'
 
 const BlogPost = ({data}) => {
   const image = getImage(data.mdx.frontmatter.hero_image)
 
   React.useEffect(()=> {
-    rafFix()
-    
+    // rafFix()
+    remset()
   },[])
 
   return (
@@ -35,7 +35,7 @@ const BlogPost = ({data}) => {
                 
                 <StaticImage className={avatar}
                   alt="avatar"
-                  src="../../images/icon/1.jpg"
+                  src="../../images/icon/2.jpeg"
                 />
 
                 <div className={dateContent}>
@@ -58,33 +58,36 @@ const BlogPost = ({data}) => {
             </div>
           
           </div>
-          <div className={blogLink} id='blogLink'>
-            <div className={floatWrap}>
-              <div className={floatHeader}>
-                <span style={{fontSize: '16px', fontWeight: 'bold'}}>相关博客</span>
-              </div>
-              { 
-                data.allMdx.nodes.map((node) => (
-                    <div className={floatContent} key={node.id}>
-                      <div className={floatTitle}>
-                        <Link to={`/blog/${node.slug}`}>
-                          <span style={{fontSize: '1rem', color: '#252933'}}>{node.frontmatter.title}</span>
-                        </Link>
+          <div className={blogLinkWrap}>
+            <div className={blogLink} id='blogLink'>
+              <div className={floatWrap}>
+                <div className={floatHeader}>
+                  <span style={{fontSize: '16px', fontWeight: 'bold'}}>相关博客</span>
+                </div>
+                { 
+                  data.allMdx.nodes.map((node) => (
+                      <div className={floatContent} key={node.id}>
+                        <div className={floatTitle}>
+                          <Link to={`/blog/${node.slug}`}>
+                            <span style={{fontSize: '1rem', color: '#252933'}}>{node.frontmatter.title}</span>
+                          </Link>
+                        </div>
+                        <div className={floatRest} style={{color: '#8a919f'}}>
+                          <span>{node.frontmatter.like}点赞  </span>
+                          ·
+                          <span>  {node.frontmatter.comment}评论</span>
+                        </div>
                       </div>
-                      <div className={floatRest} style={{color: '#8a919f'}}>
-                        <span>{node.frontmatter.like}点赞  </span>
-                        ·
-                        <span>  {node.frontmatter.comment}评论</span>
-                      </div>
-                    </div>
+                    )
+                  
                   )
-                
-                )
-              }
-            </div>
-           
+                }
+              </div>
             
+              
+            </div>
           </div>
+         
         </div>
       </div>
     
