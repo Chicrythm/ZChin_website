@@ -1,9 +1,10 @@
-.blogBackground{
+.indexBackground {
   padding-top: 1.667rem;
   background-color: #F1F3F2;
+  min-height: 100vh;
 }
 
-.blogLayout {
+.indexLayout{
   position: relative;
   max-width: 1140px;
   width: 100%;
@@ -11,79 +12,44 @@
   padding-bottom: 3.33rem;
 }
 
-.blogContentLayout {
+.indexContentLayout {
   width: 850px;
   max-width: 100%;
   background-color: white;
   padding-bottom: 1.5rem;
 }
 
-
-.blogContent {
+.indexContent{
   padding: 20px 40px 0 40px;
 }
 
-
-.blogLinkWrap{
+.indexLinkWrap{
   position: absolute;
   width: 16rem;
   top: 0;
   right: 0;
-  
 }
 
-.blogLink {
+.indexLink{
   position: fixed;
   background-color: white;
   width: inherit;
   box-shadow: 4px 4px #EDEDED;
 }
 
-
-
 @media screen and (max-width: 1440px){
-  .blogContentLayout {
+  .indexContentLayout {
     width: calc(100% - 20rem);
   }
 } 
 
 @media screen and (max-width: 1100px){
-  .blogContentLayout {
+  .indexContentLayout {
     width: 100%
   }
-  .blogLinkWrap{
+  .indexLinkWrap{
     display: none;
   }
-}
-
-
-
-
-.blogTime{
-  letter-spacing: 1px;
-  color: #8a919f
-}
-
-.dateWrap {
-  display: flex;
-  margin-bottom: 1rem;
-}
-
-.avatar {
-  width: 3.333rem;
-  height: 3.333rem;
-  border-radius: 50%;
-  margin-right: 1rem;
-}
-
-.dateContent {
-  padding-top: 4px;
-}
-
-.gatsbyImage{
-  width: 100%;
-  max-height: 500px;
-  margin-bottom: 1.5rem;
 }
 
 .floatWrap{

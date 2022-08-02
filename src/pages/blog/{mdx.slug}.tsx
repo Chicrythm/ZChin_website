@@ -16,11 +16,13 @@ import { graphql, Link } from 'gatsby'
 import { remset } from '../../common/remset'
 // import {rafFix} from '../../common/fixblock'
 
+
+
+
 const BlogPost = ({data}) => {
   const image = getImage(data.mdx.frontmatter.hero_image)
 
   React.useEffect(()=> {
-    // rafFix()
     remset()
   },[])
 
@@ -44,7 +46,7 @@ const BlogPost = ({data}) => {
                         ZChin
                       </span>
                     </div>
-                  <p className={blogTime}>{data.mdx.frontmatter.date}</p>
+                  <p className={blogTime}>{data.mdx.frontmatter.date} · 阅读 {data.mdx.frontmatter.count}</p>
                 </div>
               </div>
               
@@ -52,7 +54,8 @@ const BlogPost = ({data}) => {
                 image={image}
                 alt={data.mdx.frontmatter.hero_image_alt}
               />
-              <MDXRenderer>
+              <MDXRenderer
+              >
                 {data.mdx.body}
               </MDXRenderer>
             </div>
@@ -111,6 +114,7 @@ export const query = graphql`
             gatsbyImageData
           }
         }
+        count
       }
     },
     allMdx(sort: {fields: frontmatter___date, order: DESC}) {

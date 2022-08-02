@@ -1,18 +1,87 @@
 ---
-title: "My First Post"
-date: "2021年07月23日 15:33"
+title: "useImperativeHandle ref引用传递与父组件获取子组件函数句柄"
+date: "2021年08月01日 16:51"
 hero_image: "./1.jpg"
 hero_image_alt: "A white pitbull wearing big googly-eye glasses"
 hero_image_credit_text: "Jane Almon"
 hero_image_credit_link: "https://unsplash.com/"
-like: "2"
-comment: "12"
+like: 0
+comment: 0
+count: 9
 ---
 
-This is my first blog post! Isn't it *great*?
+### forwardRef 实现引用传递
+1. useRef 创建的 ref 相当于函数组件的实例属性
+2. forwardRef 会把收到的 ref 转发给其子组件
+```
+// 子组件
+const FancyButton = React.forwardRef((props, ref) => (
+  <div>
+    <input ref={ref} />
+    <button>
+      {props.children}
+    </button>   
+  </div>
+))
 
-Some of my **favorite** things are:
+function App() {
+  const ref = React.createRef();
+  const handleClick = React.useCallback(
+    () => ref.current.focus(), []
+  )
+  return (
+    <div>
+      <FancyButton ref={ref}>Click me!</FancyButton>
+      <button onclick={handleClick}>获取焦点</button>
+    </div>
+  )
+}
+```
 
-* Petting dogs
-* Singing
-* Eating potato-based foods
+### forwardRef 配合 useImperativeHandle
+fancyInput 通过 useImperativeHandle hook 把组件属性以对象形式传递给父组件，父组件通过转发到子组件的 ref 来捕获需要的属性。
+
+``` js
+function FancyInput (props, ref) {
+  const [fresh, setFresh] = useState(0)
+  const attRef = useRef(0)
+  useImperativeHandle(ref, ()=> {
+    return {
+      attRef,
+      fresh
+    }
+  }, [fresh]);
+  // 只会在初始化调用一次
+  const handleClick = useCallback(()=> {
+    attRef.current = attRef.current + 1
+  }, [])
+  return (
+    <div>
+      {attRef.current}
+      <button onClick={handleClick}>Fancy</button>
+      <button onClick={()=>setFresh(!fresh)}>refresh</button>   
+    </div>
+  )
+  
+}
+
+FancyInput = forwardRef(FancyInput)
+
+function App() {
+  const fancyInputRef = useRef();
+  return (
+    <div>
+      <FancyInput ref={fancyInputRef}>Click me!</FancyInput>
+      <hr />
+      <button onClick={() => console.log(fancyInputRef.current)}>
+        {/* 返回对象{attRef:{current: 0}, fresh: false} */}
+        父组件访问子组件的实例属性
+      </button>
+    </div>
+  )
+}
+```
+第三个参数与 useEffect 类似，只有数组内的属性发生改变时，才会重新刷新返回给父组件对象。
+
+#### 参考引用
+[视频理解](https://www.bilibili.com/video/BV19A411i71V?spm_id_from=333.337.search-card.all.click&vd_source=8e6c09a65f98bdea3f831ca2a673420a)

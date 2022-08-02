@@ -31,7 +31,29 @@ const config: GatsbyConfig = {
         path: `${__dirname}/blog`,
       }
     },
-    "gatsby-plugin-mdx",
+    "gatsby-transformer-remark",
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [".mdx", ".md"],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-highlight-code`,
+            options: {
+              terminal: "carbon",
+              theme: "one-light"
+            }
+          },
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1200,
+            },
+          },
+        ],
+      },
+      
+    },
     "gatsby-transformer-sharp",
   ]
 };
