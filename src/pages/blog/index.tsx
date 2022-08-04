@@ -14,12 +14,12 @@ import {indexBackground, indexLayout, indexContentLayout, indexContent,
   intro, contentMedel, medel, contentItem, itemInfo, itemAvater,
   itemBussiness, itemUserName, blogCoverWrap, postItemContent, postName,
   richContent, postItemExcerpt, blogCover,
-  postAction, actionItem, actionTitleBox
+  postAction, actionItem, actionTitleBox, articleItem
 } from './index.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMedal, faThumbsUp as ThumbsUp} from '@fortawesome/free-solid-svg-icons' 
 import { faThumbsUp, faBookmark, faArrowAltCircleUp, faBuilding, faComment, faShareFromSquare } from '@fortawesome/free-regular-svg-icons'
-import { StaticImage } from 'gatsby-plugin-image'
+import { StaticImage,GatsbyImage,getImage } from 'gatsby-plugin-image'
 
 const BlogPage = ({data}) => {
 
@@ -37,8 +37,6 @@ const BlogPage = ({data}) => {
   let readSum = readArray.reduce((preVal, curVal) => {
     return preVal + curVal
   },0)
-
-  console.log(readArray)
 
   return (
     <Layout>
@@ -65,68 +63,83 @@ const BlogPage = ({data}) => {
                   <div className={medel}><FontAwesomeIcon icon={faMedal} className={floatIcon}/>获得勋章 0</div>
                 </a>
               <div className={contentBody}>
-                <div className={contentItem}>
+                
 
+                {data.allMdx.nodes.map((node) => {
+                  let image = getImage(node.frontmatter.hero_image)
 
-                  {/* 博客头部部分 */}
-                  <div className={itemInfo}>
-                    <div className={itemAvater}>
-                      <StaticImage src="../../images/icon/avater.jpeg" alt=""/>
-                    </div>
-                    <div style={{marginLeft: '1rem', paddingTop:'0.3rem'}}>
-                      <div className={itemUserName}>ZChin</div>
-                      <div className={itemBussiness}>
-                        <div>前端开发工程师 @ 腾讯音乐娱乐TME</div>
-                        <div>·</div>
-                        2天前
+                  return ( 
+                    <div className={contentItem} key={node.id}>
+                    <article  className={articleItem}>
+                      {/* 博客头部部分 */}
+                      <div className={itemInfo}>
+                        <div className={itemAvater}>
+                          <StaticImage src="../../images/icon/avater.jpeg" alt=""/>
+                        </div>
+                        <div style={{marginLeft: '1rem', paddingTop:'0.3rem'}}>
+                          <div className={itemUserName}>ZChin</div>
+                          <div className={itemBussiness}>
+                            <div>前端开发工程师 @ 腾讯音乐娱乐TME</div>
+                            <div>·</div>
+                            {node.frontmatter.date}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                       {/* 博客内容部分 */}
+                        <div className={postItemContent}>
+                          <Link className={postName} to={`/blog/${node.slug}`}>
+                            <div>
+                              <h3>{node.frontmatter.title}</h3>
+                            </div>
+                            <div className={richContent}>
+                              <div className={postItemExcerpt}><span style={{wordBreak: 'break-word'}}>{node.frontmatter.abstract}</span></div>
+                              <div className={blogCoverWrap}>
+                                <GatsbyImage image={image} alt="post-cover" className={blogCover}/>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+  
+                        {/* 评论部分 */}
+                        <div className={postAction}>
+                        <div className={actionItem}>
+                          <div className={actionTitleBox}>
+                            <FontAwesomeIcon icon={ThumbsUp}></FontAwesomeIcon>
+                            <span> {node.frontmatter.like} 赞</span>
+                          </div>
+                        </div>
+                        <div className={actionItem}>
+                          <div className={actionTitleBox}>
+                            <FontAwesomeIcon icon={faComment}></FontAwesomeIcon>
+                            <span> {node.frontmatter.comment} 评论 </span>
+                          </div>
+                          
+                        </div>
+                        <div className={actionItem}>
+                          <div>
+                            <FontAwesomeIcon icon={faShareFromSquare}></FontAwesomeIcon>
+                            <span> {node.frontmatter.share} 分享 </span>
+                          </div>
+                        
+                        </div>
+                      </div>
+                      
+                      </article>
+                    </div>)
+                 
+                })}
+
+                 
 
                   {/* <Link to={`/blog/${node.slug}`}>
                     {node.frontmatter.title}
                   </Link> */}
 
-                  {/* 博客内容部分 */}
-                  <div className={postItemContent}>
-                    <Link className={postName} to={`/blog/my-first-post`}>
-                      <div>
-                        <h3>useImperativeHandle ref引用传递与父组件获取子组件函数句柄</h3>
-                      </div>
-                      <div className={richContent}>
-                        <div className={postItemExcerpt}><span style={{wordBreak: 'break-word'}}>useImperativeHandle ref引用传递与父组件获取子组件函数句柄 fancyInput 通过 useImperativeHandle hook 把组件属性以...</span></div>
-                        <div className={blogCoverWrap}>
-                          <StaticImage src="../../../blog/my-first-post/1.jpg" alt="" className={blogCover}/>
-                        </div>
-                        
-                      </div>
-                    </Link>
-                  </div>
+                 
 
-                  <div className={postAction}>
-                    <div className={actionItem}>
-                      <div className={actionTitleBox}>
-                        <FontAwesomeIcon icon={ThumbsUp}></FontAwesomeIcon>
-                        1 赞
-                      </div>
-                    </div>
-                    <div className={actionItem}>
-                      <div className={actionTitleBox}>
-                        <FontAwesomeIcon icon={faComment}></FontAwesomeIcon>
-                        0 评论
-                      </div>
-                      
-                    </div>
-                    <div className={actionItem}>
-                      <div>
-                        <FontAwesomeIcon icon={faShareFromSquare}></FontAwesomeIcon>
-                        0 分享
-                      </div>
-                     
-                    </div>
-                  </div>
+               
 
-                </div>
+                
               </div>
             </div>
           
@@ -195,10 +208,18 @@ export const query = graphql`
       nodes {
         frontmatter {
           date
+          abstract
           title
+          imagePath
           like
           comment
           count
+          share
+          hero_image {
+            childImageSharp {
+              gatsbyImageData
+            }
+          }
         }
         id
         slug

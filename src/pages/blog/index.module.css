@@ -83,11 +83,6 @@
   overflow: hidden;
 }
 
-.contentBody {
-  background-color: white;
-}
-
-
 .indexLinkWrap{
   flex: 0 0 auto;
   margin-left: 1rem;
@@ -181,7 +176,7 @@
 
 
 .postItemContent {
-  margin-left: 56px;
+  margin-left: 64px;
   padding: 6px 20px 10px;
 }
 
@@ -214,6 +209,10 @@
   width: 65px;
   flex: 0 0 auto;
   border-radius: 2px;
+}
+
+.articleItem{
+  margin-bottom: 10px;
 }
 
 .postAction{

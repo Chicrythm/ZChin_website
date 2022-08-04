@@ -34,7 +34,7 @@ const Layout = ({ children, pageTitle }) => {
               <div className={headerLinkWrap}>
                 <ul className={headerLink}>
                   <li><Link to="/">首页</Link></li>
-                  <li><Link to="/about">关于我</Link></li>
+                  {/* <li><Link to="/about">关于我</Link></li> */}
                   <li><Link to="/project">项目</Link></li>
                   <li><Link to="/blog">博客</Link></li>
                   <li><Link to="/contact">联系方式</Link></li>
