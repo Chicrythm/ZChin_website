@@ -73,8 +73,8 @@ const BlogPage = ({data}) => {
                     <article  className={articleItem}>
                       {/* 博客头部部分 */}
                       <div className={itemInfo}>
-                        <div className={itemAvater}>
-                          <StaticImage src="../../images/icon/avater.jpeg" alt=""/>
+                        <div >
+                          <StaticImage src="../../images/icon/avater.jpeg" alt="" className={itemAvater}/>
                         </div>
                         <div style={{marginLeft: '1rem', paddingTop:'0.3rem'}}>
                           <div className={itemUserName}>ZChin</div>
