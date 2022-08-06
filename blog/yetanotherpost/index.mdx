@@ -1,19 +1,89 @@
 ---
-title: "Yet Another Post 🛫"
-abstract: "useImperativeHandle ref引用传递与父组件获取子组件函数句柄 fancyInput 通过 useImperativeHandle hook 把组件属性以..."
-date: "2022年07月25日 15:33"
+title: "React Route (File-based vs Code-based)"
+abstract: "code-based 需要额外的代码来支持实现路由 File-based 合适的文件路径安排即是合理的路由..."
+date: "2022年08月07日 01:31"
 imagePath: "../../../blog/yetanotherpost/1.jpg"
-hero_image: "./1.jpg"
-hero_image_alt: "A grey and white pitbull wading happily in a pool"
-hero_image_credit_text: "Anthony Duran"
+hero_image: "./2.jpg"
+hero_image_alt: ""
+hero_image_credit_text: ""
 hero_image_credit_link: "https://unsplash.com/"
-like: 0
+like: 1
 comment: 0
-count: 0
+count: 1
 share: 0
 ---
+### Code-based 写法
+code-based 需要额外的代码来支持实现路由
+```
+function App() {
+  return (
+    <div>
+      <Switch>
+        <Route path="/" exact>
+          <Home></Home>
+        </Route>
+        <Route path="/About">
+          <About></About>
+        </Route>
+        <Route path="/Contact">
+          <Contact></Contact>
+        </Route>
+      </Switch>
+    </div>
+  );
+}
+``
+```
+### File-based 写法
+普通的基于文件路径的路由匹配写法
+```
+// 以其中的文件路径作为例子
+// 文件路径 -- 路由匹配项
+// src/pages/index -- /
+// src/pages/blog/index -- /blog/
+// src/pages/blog/[blogId] -- /blog/(待匹配一个id项)
+```
 
-# Wow look at all this content. How do they do it?
+#### 捕捉全部的路径写法
+```
+// 可以匹配到 blog 路径下的所有写法
+// src/pages/blog/[...slug] -- /blog/...
+```
 
+#### File-based Link
+Link 的写法有两种，一种以字符串形式，一种一对象形式
+```
+function Client() {
+  const clients = [
+    { id: "ye", name: "ziqing" },
+    { id: "yang", name: "yuxiang" },
+  ];
 
-`sadsfs`
+  return (
+    <ul>
+      {clients.map((client) => {
+        <li key={client.id}>
+           // 方式 1
+           <Link href={{
+            pathname: '/blog/[id]',
+            query: {id: client.id}
+          }}></Link>
+          // 方式 2
+          <Link href={`/client/${client.name}`}></Link>
+        </li>;
+      })}
+    </ul>
+  );
+}
+
+```
+### 总结两者的对比
+
+| File-based Routing | Code-based Routing |
+| --- | --- |
+| NextJS | React + react-router |
+| 不需要额外的路由代码 | 需要配合 Switch Route一起使用 |
+| 更加直观的路径文件路径 | 文件可以任意摆放 |
+
+### 参考
+[视频参考](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae6c698534544dd4beac8b9981c54451~tplv-k3u1fbpfcp-zoom-1.image)
