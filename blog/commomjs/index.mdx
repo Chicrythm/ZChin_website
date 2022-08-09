@@ -1,0 +1,70 @@
+---
+title: "从打包后文件浅析 CommonJS 模块导出规则"
+abstract: "exports 是一个变量，可以把各种类型挂载到 exports 上，导出的 exports 指向的对象与原文件对象内存地址一致，module.exports 会覆盖原来的..."
+date: "2022年08月08日 17:45"
+hero_image: "./1.jpg"
+hero_image_alt: ""
+hero_image_credit_text: ""
+hero_image_credit_link: "https://unsplash.com/"
+like: 1
+comment: 0
+count: 2
+share: 0
+---
+### CommonJS 规则总结
+CommonJS在导出模块的时候有自己包含的规则
+1. exports 是一个变量，可以把各种类型挂载到 exports 上 
+```
+// lib.js
+exports.hello = 'world'
+exports.add = function (a, b) {
+  return a + b
+}
+exports.geekbang = {hello: 'world'}
+
+
+// index.js 注意：后续默认 index.js 引入 lib.js
+var lib = require('./lib.js')
+```
+2. 导出的 exports 指向的对象与原文件对象内存地址一致
+```
+// lib.js
+exports.hello = 'world'
+setTimeout(()=>{
+    console.log(exports)
+    // { hello: 'world', addtional: 'test' }
+},2000)
+
+//index.js
+let lib = require('./lib.js')
+lib.addtional = 'test'
+```
+
+3. module.exports 会覆盖原来的 exports
+```
+// lib.js
+exports.hello = 'world'
+module.exports = function minus(a, b) {
+  return a - b
+}
+
+// 最终输出为 lib [Function: minus]，module.exports 会覆盖原来的 exports
+```
+### webpack 打包后分析规则原因
+1. 对文件用 webpack 的开发模式从 index.js 为入口打包代码，比较关键的是 `__webpack_require__` 这个函数，每个模块都会执行一次该函数，通过**函数包裹**的方式，确保每个模块有**自己的作用域**。
+2. 函数内部会有 module 变量，函数最终返回该 exports 对象，因此导出后可以通过操作该对象来控制 exports。
+3. 如果最终用第三种写法，则会改变导出的 module.exports 内部对象的地址，从而使得挂载到原来的 exports 对象内的内容无法访问，造成如覆盖的现象。
+```
+// 函数体内
+function __webpack_require__(moduleId) {
+    // 省略部分内容...
+    
+    var module = __webpack_module_cache__[moduleId] = {
+        // no module.id needed
+        // no module.loaded needed
+        exports: {}
+    };
+    return module.exports;
+}
+
+```

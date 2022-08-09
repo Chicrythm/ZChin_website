@@ -161,7 +161,7 @@ const BlogPage = ({data}) => {
                   </div>
                   <div className={floatItem}>
                     <FontAwesomeIcon icon={faArrowAltCircleUp} className={floatIcon}/>
-                    <span className={floatItemContent}>掘力值 11</span>
+                    <span className={floatItemContent}>掘力值 32</span>
                   </div>
                 </div>
               </div>
